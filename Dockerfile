@@ -1,4 +1,4 @@
-FROM openjdk:21.0.6-jdk-oracle as build
+FROM openjdk:21 as build
 
 WORKDIR /workspace/app
 
@@ -13,7 +13,7 @@ RUN ./mvnw install -DskipTests
 
 RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
 
-FROM openjdk:21.0.6-jdk-oracle
+FROM openjdk:21
 
 VOLUME /tmp
 
