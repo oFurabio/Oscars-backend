@@ -27,7 +27,6 @@ public class User {
 
     @NotBlank(message = "password is mandatory")
     @Size(min = 6, message = "password must be at least 6 characters long")
-    @JsonIgnore
     private String password;
 
     @Enumerated(EnumType.STRING)
