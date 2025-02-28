@@ -66,7 +66,7 @@ public class BasicSecurityConfig {
                         .requestMatchers("/users/all").hasRole("ADMIN")
                         .requestMatchers("/users/login").permitAll()
                         .requestMatchers("/users/register").permitAll()
-                        .antMatchers(HttpMethod.GET, "/categories").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/categories").permitAll()
                         .requestMatchers("/error/**").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS).permitAll()
                         .anyRequest().authenticated())
