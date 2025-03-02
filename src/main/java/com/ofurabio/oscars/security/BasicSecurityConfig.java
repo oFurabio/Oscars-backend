@@ -59,13 +59,13 @@ public class BasicSecurityConfig {
 
         http
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/votes/vote").authenticated()
                         .requestMatchers("/votes/category/**").hasRole("ADMIN")
                         .requestMatchers("/nominees/set-winner/**").hasRole("ADMIN")
                         .requestMatchers("/users/admins").hasRole("ADMIN")
                         .requestMatchers("/users/all").hasRole("ADMIN")
                         .requestMatchers("/users/login").permitAll()
                         .requestMatchers("/users/register").permitAll()
+                        .requestMatchers("/nominees/category/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/categories").permitAll()
                         .requestMatchers("/error/**").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS).permitAll()
