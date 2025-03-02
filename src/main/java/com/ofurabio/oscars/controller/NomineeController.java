@@ -46,6 +46,11 @@ public class NomineeController {
         return ResponseEntity.ok(nomineeRepository.findAllByNameContainingIgnoreCase(name));
     }
 
+    @GetMapping("/category/{id}")
+    public ResponseEntity <List<Nominee>> getByCategory (@PathVariable Long id) {
+        return ResponseEntity.ok(nomineeRepository.findByCategories(categoryRepository.findById(id)));
+    }
+
     @PostMapping
     public ResponseEntity<Nominee> post(@Valid @RequestBody Nominee nominee) {
         List<Long> categoryIds = nominee.getCategories().stream()
