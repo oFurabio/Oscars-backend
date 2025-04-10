@@ -67,6 +67,27 @@ public class NomineeController {
         return ResponseEntity.status(HttpStatus.CREATED).body(nomineeRepository.save(nominee));
     }
 
+    @PostMapping("/batch")
+    public ResponseEntity<List<Nominee>> postMany(@Valid @RequestBody List<Nominee> nominees) {
+        for (Nominee nominee : nominees) {
+            List<Long> categoryIds = nominee.getCategories().stream().map(Category::getId).toList();
+
+            List<Category> categories = categoryRepository.findAllById(categoryIds);
+
+            if (categories.size() != categoryIds.size()) {
+                throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "One or more categories not found for nominee: " + nominee.getName()
+                );
+            }
+
+            nominee.setCategories(categories);
+        }
+
+        List<Nominee> savedNominees = nomineeRepository.saveAll(nominees);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedNominees);
+    }
+    
     @PostMapping("/set-winner/{nomineeId}")
     public ResponseEntity<String> setWinner(@PathVariable Long nomineeId) {
         return nomineeService.setWinner(nomineeId);
