@@ -42,7 +42,13 @@ public class CategoryController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(categoryRepository.save(category));
     }
-
+    
+    @PostMapping("/batch")
+    public ResponseEntity<List<Category>> postMany(@Valid @RequestBody List<Category> categories) {
+        List<Category> savedCategories = categoryRepository.saveAll(categories);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedCategories);
+    }
+    
     @PutMapping
     public ResponseEntity<Category> put(@Valid @RequestBody Category category) {
         return categoryRepository.findById(category.getId())
